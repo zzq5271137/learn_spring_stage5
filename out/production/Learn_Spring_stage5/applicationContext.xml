@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--
+        让spring来管理数据源;
+
+        连接池:
+        1. Spring默认自带的连接池: class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+           连接池的属性注入配置:
+           <property name="driverClassName"
+                     value="com.mysql.cj.jdbc.Driver"/>
+           <property name="url"
+                     value="jdbc:mysql://localhost:3306/myspring?useUnicode=true&amp;characterEncoding=utf8"/>
+           <property name="username"
+                     value="root"/>
+           <property name="password"
+                     value="ZZQ930603"/>
+        2. dbcp连接池: class="org.apache.commons.dbcp.BasicDataSource"
+           连接池的属性注入配置: 同spring的默认连接池的属性注入配置相同
+        3. c3p0连接池: class="com.mchange.v2.c3p0.ComboPooledDataSource"
+           其中, c3p0连接池的属性注入配置有些不一样:
+           <property name="driverClass"
+                     value="com.mysql.cj.jdbc.Driver"/>
+           <property name="jdbcUrl"
+                     value="jdbc:mysql://localhost:3306/myspring?useUnicode=true&amp;characterEncoding=utf8"/>
+           <property name="user"
+                     value="root"/>
+           <property name="password"
+                     value="ZZQ930603"/>
+         4. Druid连接池: class="com.alibaba.druid.pool.DruidDataSource"
+            连接池的属性注入配置: 同spring的默认连接池的属性注入配置相同
+    -->
+    <!--
+        加载数据库的属性文件: 两种方式
+        方式一:
+        <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+            <property name="location" value="jdbc.properties"/>
+        </bean>
+    -->
+    <!-- 方式二: 这种方式, 在引用的时候, 要求jdbc.properties中的key值不能和name一样 -->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <bean id="datasource"
+          class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName"
+                  value="${jdbc.driverClass}"/>
+        <property name="url"
+                  value="${jdbc.url}"/>
+        <property name="username"
+                  value="${jdbc.username}"/>
+        <property name="password"
+                  value="${jdbc.password}"/>
+    </bean>
+
+    <bean id="jdbcTemplate"
+          class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="datasource"/>
+    </bean>
+
+    <bean id="accountDao" class="com.mycomp.jdbctemplate.demo2.AccountDaoImpl">
+        <property name="dataSource" ref="datasource"/>
+    </bean>
+
+    <bean id="accountService"
+          class="com.mycomp.jdbctemplate.demo2.AccountServiceImpl">
+        <property name="accountDao" ref="accountDao"/>
+        <property name="transactionTemplate" ref="transactionTemplate"/>
+    </bean>
+
+    <!-- 配置事务管理器 -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="datasource"/>
+    </bean>
+
+    <!-- 配置事务管理模板 -->
+    <bean id="transactionTemplate"
+          class="org.springframework.transaction.support.TransactionTemplate">
+        <property name="transactionManager" ref="transactionManager"/>
+    </bean>
+
+</beans>
