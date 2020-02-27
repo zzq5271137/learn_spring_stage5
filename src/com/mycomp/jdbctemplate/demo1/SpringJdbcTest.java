@@ -24,5 +24,4 @@ public class SpringJdbcTest {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         jdbcTemplate.update("insert into account values (null, ?, ?)", "zzq", 30.45d);
     }
-
 }
