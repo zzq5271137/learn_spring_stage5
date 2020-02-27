@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="02b1ab98-b3d6-40e7-acc6-2f63eb702aef" name="Default Changelist" comment="" />
+    <list default="true" id="02b1ab98-b3d6-40e7-acc6-2f63eb702aef" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/课件/撩课-SSH整合.xmind" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/课件/撩课-Spring-Aop.xmind" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/课件/撩课-Spring-jdbc模板.xmind" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/课件/撩课-Spring.pptx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/课件/撩课-Spring.xmind" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -392,6 +398,7 @@
       <workItem from="1581509969901" duration="5813000" />
       <workItem from="1581516098514" duration="1528000" />
       <workItem from="1581518610045" duration="90000" />
+      <workItem from="1582814593508" duration="1000" />
     </task>
     <servers />
   </component>
